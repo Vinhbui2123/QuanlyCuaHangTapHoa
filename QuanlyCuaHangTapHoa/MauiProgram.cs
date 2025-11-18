@@ -1,27 +1,39 @@
-﻿using Microsoft.Extensions.Logging;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
+using Microsoft.EntityFrameworkCore;
+using QuanlyCuaHangTapHoa.Data;
 
-namespace QuanlyCuaHangTapHoa
+namespace QuanlyCuaHangTapHoa;
+
+public static class MauiProgram
 {
-    public static class MauiProgram
+    public static MauiApp CreateMauiApp()
     {
-        public static MauiApp CreateMauiApp()
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
+
+        // ===== Đăng ký DbContext sử dụng SQLite =====
+        var dbPath = Path.Combine(FileSystem.AppDataDirectory, "grocery_store.db");
+        builder.Services.AddDbContext<AppDbContext>(options =>
         {
-            var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+            options.UseSqlite($"Data Source={dbPath}");
+        });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+        var app = builder.Build();
 
-            return builder.Build();
+        // Tự động tạo database + bảng nếu chưa có
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            db.Database.EnsureCreated();
         }
+
+        return app;
     }
 }
