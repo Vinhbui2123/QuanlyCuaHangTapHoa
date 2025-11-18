@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36408.4 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuanlyCuaHangTapHoa", "QuanlyCuaHangTapHoa\QuanlyCuaHangTapHoa.csproj", "{FD39A766-E83C-4889-9E32-16C3CDA8AFFB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD39A766-E83C-4889-9E32-16C3CDA8AFFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD39A766-E83C-4889-9E32-16C3CDA8AFFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD39A766-E83C-4889-9E32-16C3CDA8AFFB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FD39A766-E83C-4889-9E32-16C3CDA8AFFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD39A766-E83C-4889-9E32-16C3CDA8AFFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD39A766-E83C-4889-9E32-16C3CDA8AFFB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B47028A0-6128-4338-8B55-2EAD2BBA51C0}
+	EndGlobalSection
+EndGlobal
