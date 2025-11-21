@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.EntityFrameworkCore;
 using QuanlyCuaHangTapHoa.Data;
+using QuanlyCuaHangTapHoa.Data.Repositories;
+
 
 namespace QuanlyCuaHangTapHoa;
 
@@ -24,6 +26,11 @@ public static class MauiProgram
         {
             options.UseSqlite($"Data Source={dbPath}");
         });
+        // Đăng ký repositories
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+
 
         var app = builder.Build();
 
