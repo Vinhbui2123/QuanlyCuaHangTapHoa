@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="QuanlyCuaHangTapHoa.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:QuanlyCuaHangTapHoa"
-    Shell.FlyoutBehavior="Disabled"
-    Title="QuanlyCuaHangTapHoa">
+    xmlns:views="clr-namespace:QuanlyCuaHangTapHoa.Views"
+    x:Class="QuanlyCuaHangTapHoa.AppShell">
 
+    <!-- Trang mặc định -->
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="LoginPage"
+        ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <!-- Trang chính sau đăng nhập -->
+    <ShellContent
+        Route="HomePage"
+        ContentTemplate="{DataTemplate views:HomePage}" />
 
 </Shell>

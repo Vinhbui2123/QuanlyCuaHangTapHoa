@@ -2,6 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using QuanlyCuaHangTapHoa.Data;
 using QuanlyCuaHangTapHoa.Data.Repositories;
+using QuanlyCuaHangTapHoa.Services;
+using QuanlyCuaHangTapHoa.Views;
+using QuanlyCuaHangTapHoa.ViewModels;
+
 
 
 namespace QuanlyCuaHangTapHoa;
@@ -30,6 +34,17 @@ public static class MauiProgram
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+        builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+        // Services
+        builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+        builder.Services.AddScoped<IProductService, ProductService>();
+
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<HomePage>();
+
+
+
 
 
         var app = builder.Build();

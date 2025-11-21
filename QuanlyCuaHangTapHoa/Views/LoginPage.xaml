@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuanlyCuaHangTapHoa.ViewModels"
+             x:Class="QuanlyCuaHangTapHoa.Views.LoginPage"
+             Title="Đăng nhập">
+
+    <VerticalStackLayout Padding="30" Spacing="15">
+
+        <Label Text="ĐĂNG NHẬP"
+               HorizontalOptions="Center"
+               FontSize="28"
+               FontAttributes="Bold"/>
+
+        <Entry Placeholder="Tên đăng nhập"
+               Text="{Binding Username}" />
+
+        <Entry Placeholder="Mật khẩu"
+               IsPassword="True"
+               Text="{Binding Password}" />
+
+        <Button Text="Đăng nhập"
+                Command="{Binding LoginCommand}"
+                BackgroundColor="#007AFF"
+                TextColor="White"/>
+
+        <Label Text="{Binding Message}"
+               TextColor="Red"
+               FontSize="14"
+               HorizontalOptions="Center" />
+
+    </VerticalStackLayout>
+</ContentPage>
