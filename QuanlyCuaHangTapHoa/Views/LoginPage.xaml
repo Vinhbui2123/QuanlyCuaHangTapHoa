@@ -23,7 +23,10 @@
                 Command="{Binding LoginCommand}"
                 BackgroundColor="#007AFF"
                 TextColor="White"/>
-
+        <Button Text="Đăng ký tài khoản mới"
+                Command="{Binding GoToRegisterCommand}"
+                BackgroundColor="Transparent"
+                TextColor="#007AFF" />
         <Label Text="{Binding Message}"
                TextColor="Red"
                FontSize="14"

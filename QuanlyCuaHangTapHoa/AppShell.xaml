@@ -14,5 +14,6 @@
     <ShellContent
         Route="HomePage"
         ContentTemplate="{DataTemplate views:HomePage}" />
+    
 
 </Shell>

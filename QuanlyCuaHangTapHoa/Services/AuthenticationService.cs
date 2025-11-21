@@ -121,5 +121,47 @@ namespace QuanlyCuaHangTapHoa.Services
                 ? (true, "Đổi mật khẩu thành công.")
                 : (false, "Đổi mật khẩu thất bại.");
         }
+        public async Task<(bool Success, string Message)> RegisterAsync(
+    string username,
+    string password,
+    string fullName,
+    string? phone,
+    string? email)
+        {
+            if (string.IsNullOrWhiteSpace(username) ||
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(fullName))
+            {
+                return (false, "Vui lòng nhập đầy đủ thông tin bắt buộc.");
+            }
+
+            // kiểm tra trùng username
+            var existed = await _userRepo.GetByUsernameAsync(username);
+            if (existed != null)
+            {
+                return (false, "Tên đăng nhập đã tồn tại.");
+            }
+
+            // hash mật khẩu mới bằng BCrypt
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
+
+            var newUser = new User
+            {
+                Username = username.Trim(),
+                PasswordHash = passwordHash,
+                FullName = fullName.Trim(),
+                Phone = phone?.Trim(),
+                Email = email?.Trim(),
+                Role = "Staff",          // tài khoản đăng ký mới là Nhân viên
+                IsActive = true
+            };
+
+            var added = await _userRepo.AddAsync(newUser);
+
+            return added.Id > 0
+                ? (true, "Đăng ký tài khoản thành công.")
+                : (false, "Đăng ký tài khoản thất bại.");
+        }
+
     }
 }

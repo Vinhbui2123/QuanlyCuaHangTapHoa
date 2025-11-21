@@ -49,5 +49,10 @@ namespace QuanlyCuaHangTapHoa.ViewModels
 
             IsBusy = false;
         }
+        [RelayCommand]
+        public async Task GoToRegisterAsync()
+        {
+            await Shell.Current.GoToAsync(nameof(Views.RegisterPage));
+        }
     }
 }

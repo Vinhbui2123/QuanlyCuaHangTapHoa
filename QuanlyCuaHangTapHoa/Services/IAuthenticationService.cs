@@ -10,6 +10,12 @@ namespace QuanlyCuaHangTapHoa.Services
         Task<(bool Success, string Message)> ChangePasswordAsync(string oldPassword, string newPassword);
         User? GetCurrentUser();
         bool IsLoggedIn();
+
+        Task<(bool Success, string Message)> RegisterAsync(
+            string username,
+            string password,
+            string fullName,
+            string? phone,
+            string? email);
     }
 }
-    

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuanlyCuaHangTapHoa.ViewModels"
+             x:Class="QuanlyCuaHangTapHoa.Views.RegisterPage"
+             Title="Đăng ký">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="12">
+
+            <Label Text="ĐĂNG KÝ TÀI KHOẢN"
+                   HorizontalOptions="Center"
+                   FontSize="26"
+                   FontAttributes="Bold" />
+
+            <Entry Placeholder="Tên đăng nhập"
+                   Text="{Binding Username}" />
+
+            <Entry Placeholder="Họ tên"
+                   Text="{Binding FullName}" />
+
+            <Entry Placeholder="Số điện thoại"
+                   Keyboard="Telephone"
+                   Text="{Binding Phone}" />
+
+            <Entry Placeholder="Email"
+                   Keyboard="Email"
+                   Text="{Binding Email}" />
+
+            <Entry Placeholder="Mật khẩu"
+                   IsPassword="True"
+                   Text="{Binding Password}" />
+
+            <Entry Placeholder="Nhập lại mật khẩu"
+                   IsPassword="True"
+                   Text="{Binding ConfirmPassword}" />
+
+            <Button Text="Đăng ký"
+                    Command="{Binding RegisterCommand}"
+                    BackgroundColor="#28a745"
+                    TextColor="White" />
+
+            <Label Text="{Binding Message}"
+                   TextColor="Red"
+                   HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
