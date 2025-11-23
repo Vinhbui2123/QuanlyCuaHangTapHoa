@@ -34,6 +34,7 @@ namespace QuanlyCuaHangTapHoa.ViewModels
         {
             if (IsBusy) return;
             IsBusy = true;
+            Message = string.Empty;
 
             var result = await _authService.LoginAsync(Username, Password);
 
@@ -44,11 +45,15 @@ namespace QuanlyCuaHangTapHoa.ViewModels
                 return;
             }
 
-            // Điều hướng sang trang chính sau khi đăng nhập
+            // ✅ Mở lại menu sau khi đăng nhập
+            Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
+
+            // Điều hướng về Trang chủ, reset stack
             await Shell.Current.GoToAsync("//HomePage");
 
             IsBusy = false;
         }
+
         [RelayCommand]
         public async Task GoToRegisterAsync()
         {

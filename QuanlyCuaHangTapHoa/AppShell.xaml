@@ -1,33 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Shell
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:QuanlyCuaHangTapHoa.Views"
     x:Class="QuanlyCuaHangTapHoa.AppShell">
 
-    <!-- Trang mặc định -->
+    <!-- MÀN HÌNH ĐĂNG NHẬP (không hiện trong menu) -->
     <ShellContent
         Route="LoginPage"
         ContentTemplate="{DataTemplate views:LoginPage}" />
 
-    <!-- Trang chính sau đăng nhập -->
-    <ShellContent
-        Route="HomePage"
-        ContentTemplate="{DataTemplate views:HomePage}" />
-    <!-- QUẢN LÝ SẢN PHẨM -->
-    <ShellContent
-        Route="ProductListPage"
-        ContentTemplate="{DataTemplate views:ProductListPage}"
-        Title="Sản phẩm" />
-    <!-- Màn hình bán hàng -->
-    <ShellContent
-        Route="PosPage"
-        ContentTemplate="{DataTemplate views:PosPage}"
-        Title="Bán hàng" />
+    <!-- TRANG CHÍNH SAU ĐĂNG NHẬP -->
+    <FlyoutItem Title="Trang chủ">
+        <ShellContent
+            Route="HomePage"
+            ContentTemplate="{DataTemplate views:HomePage}" />
+    </FlyoutItem>
 
-    <ShellContent
-        Route="CategoryListPage"
-        ContentTemplate="{DataTemplate views:CategoryListPage}"
-        Title="Danh mục" />
+    <!-- QUẢN LÝ SẢN PHẨM -->
+    <FlyoutItem Title="Sản phẩm">
+        <ShellContent
+            Route="ProductListPage"
+            ContentTemplate="{DataTemplate views:ProductListPage}" />
+    </FlyoutItem>
+
+    <!-- MÀN HÌNH BÁN HÀNG -->
+    <FlyoutItem Title="Bán hàng">
+        <ShellContent
+            Route="PosPage"
+            ContentTemplate="{DataTemplate views:PosPage}" />
+    </FlyoutItem>
+
+    <!-- DANH MỤC -->
+    <FlyoutItem Title="Danh mục">
+        <ShellContent
+            Route="CategoryListPage"
+            ContentTemplate="{DataTemplate views:CategoryListPage}" />
+    </FlyoutItem>
 
 </Shell>

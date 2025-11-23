@@ -4,6 +4,11 @@
              x:Class="QuanlyCuaHangTapHoa.Views.HomePage"
              Title="Trang chủ">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Đăng xuất"
+                     Clicked="Logout_Clicked" />
+    </ContentPage.ToolbarItems>
+
     <VerticalStackLayout Padding="20">
         <Label Text="Chào mừng!"
                FontSize="24"

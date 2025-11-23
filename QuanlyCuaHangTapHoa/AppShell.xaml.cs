@@ -15,5 +15,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(ProductDetailPage), typeof(ProductDetailPage));
 
         Routing.RegisterRoute(nameof(CategoryDetailPage), typeof(CategoryDetailPage));
+
+
+        // 🚫 KHÓA menu khi mới vào app
+        this.FlyoutBehavior = FlyoutBehavior.Disabled;
     }
 }
