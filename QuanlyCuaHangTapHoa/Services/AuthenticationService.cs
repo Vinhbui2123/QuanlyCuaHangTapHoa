@@ -71,40 +71,36 @@ namespace QuanlyCuaHangTapHoa.Services
         // ================================
         // KIỂM TRA ĐÃ ĐĂNG NHẬP
         // ================================
-        public bool IsLoggedIn()
+        // ✅ Phiên bản async an toàn cho UI
+        public async Task<User?> GetCurrentUserAsync()
         {
-            // Vì SecureStorage là async → phải gọi Result trong hàm sync
-            var task = SecureStorage.GetAsync(CURRENT_USER_KEY);
-            task.Wait();
+            var idStr = await SecureStorage.GetAsync(CURRENT_USER_KEY);
+            if (string.IsNullOrEmpty(idStr)) return null;
+            if (!int.TryParse(idStr, out int userId)) return null;
 
-            return !string.IsNullOrEmpty(task.Result);
+            return await _userRepo.GetByIdAsync(userId);
         }
 
-        // ================================
-        // LẤY USER HIỆN TẠI
-        // ================================
+        // ✅ Wrapper sync (hạn chế dùng, nhưng không còn .Wait() nữa)
         public User? GetCurrentUser()
         {
-            var task = SecureStorage.GetAsync(CURRENT_USER_KEY);
-            task.Wait();
-
-            if (int.TryParse(task.Result, out int userId))
-            {
-                var userTask = _userRepo.GetByIdAsync(userId);
-                userTask.Wait();
-                return userTask.Result;
-            }
-
-            return null;
+            return GetCurrentUserAsync().GetAwaiter().GetResult();
         }
 
-        // ================================
-        // ĐỔI MẬT KHẨU
-        // ================================
+        public async Task<bool> IsLoggedInAsync()
+        {
+            var idStr = await SecureStorage.GetAsync(CURRENT_USER_KEY);
+            return !string.IsNullOrEmpty(idStr);
+        }
+
+        public bool IsLoggedIn()
+        {
+            return IsLoggedInAsync().GetAwaiter().GetResult();
+        }
+
         public async Task<(bool Success, string Message)> ChangePasswordAsync(string oldPassword, string newPassword)
         {
-            var currentUser = GetCurrentUser();
-
+            var currentUser = await GetCurrentUserAsync();
             if (currentUser == null)
                 return (false, "Bạn chưa đăng nhập.");
 
@@ -112,9 +108,7 @@ namespace QuanlyCuaHangTapHoa.Services
             if (!oldMatch)
                 return (false, "Mật khẩu cũ không đúng.");
 
-            // Hash mật khẩu mới
             currentUser.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
-
             var result = await _userRepo.UpdateAsync(currentUser);
 
             return result
@@ -122,11 +116,11 @@ namespace QuanlyCuaHangTapHoa.Services
                 : (false, "Đổi mật khẩu thất bại.");
         }
         public async Task<(bool Success, string Message)> RegisterAsync(
-    string username,
-    string password,
-    string fullName,
-    string? phone,
-    string? email)
+                                                                        string username,
+                                                                        string password,
+                                                                        string fullName,
+                                                                        string? phone,
+                                                                        string? email)
         {
             if (string.IsNullOrWhiteSpace(username) ||
                 string.IsNullOrWhiteSpace(password) ||

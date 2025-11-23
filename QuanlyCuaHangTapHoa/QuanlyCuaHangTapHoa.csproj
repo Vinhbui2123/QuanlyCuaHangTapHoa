@@ -73,7 +73,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Converters\" />
-	  <Folder Include="DTOs\" />
 	  <Folder Include="Constants\" />
 	  <Folder Include="Shared\" />
 	</ItemGroup>
@@ -83,6 +82,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PosPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ProductDetailPage.xaml">

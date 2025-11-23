@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuanlyCuaHangTapHoa.Views.PosPage"
+             Title="Bán hàng">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="10">
+
+        <!-- Ô nhập mã / tên + nút Thêm -->
+        <HorizontalStackLayout Grid.Row="0" Spacing="8">
+            <Entry Placeholder="Nhập mã hoặc tên sản phẩm..."
+                   HorizontalOptions="FillAndExpand"
+                   Text="{Binding SearchCodeOrName}" />
+            <Button Text="Thêm"
+                    Command="{Binding AddProductCommand}" />
+        </HorizontalStackLayout>
+
+        <!-- Danh sách giỏ hàng -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding CartItems}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5"
+                           Padding="10"
+                           HasShadow="True"
+                           CornerRadius="8">
+                        <Grid ColumnDefinitions="*,Auto"
+                              RowDefinitions="Auto,Auto">
+
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding Product.Name}"
+                                   FontAttributes="Bold" />
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   FontSize="13">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="SL: " />
+                                        <Span Text="{Binding Quantity}" />
+                                        <Span Text="  |  Đơn giá: " />
+                                        <Span Text="{Binding UnitPrice}" />
+                                        <Span Text="  |  Thành tiền: " />
+                                        <Span Text="{Binding TotalPrice}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <HorizontalStackLayout Grid.Row="0"
+                                                   Grid.Column="1"
+                                                   Grid.RowSpan="2"
+                                                   Spacing="4"
+                                                   VerticalOptions="Center">
+                                <Button Text="-"
+                                        WidthRequest="32"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DecreaseQuantityCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Text="+"
+                                        WidthRequest="32"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IncreaseQuantityCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Text="x"
+                                        WidthRequest="32"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveItemCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </HorizontalStackLayout>
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Khu vực thanh toán -->
+        <VerticalStackLayout Grid.Row="2" Spacing="6" Padding="0,10,0,0">
+
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Tổng tiền: " />
+                        <Span Text="{Binding TotalAmount}" />
+                        <Span Text="   |   Giảm giá: " />
+                        <Span Text="{Binding TotalDiscount}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Cần thanh toán: " />
+                        <Span Text="{Binding FinalAmount}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <HorizontalStackLayout Spacing="8">
+                <Label Text="Khách đưa:" VerticalOptions="Center" />
+                <Entry WidthRequest="120"
+                       Keyboard="Numeric"
+                       Text="{Binding ReceivedAmount}" />
+                <Label Text="Tiền thừa:" VerticalOptions="Center" />
+                <Label Text="{Binding ChangeAmount}"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Button Text="THANH TOÁN"
+                    Command="{Binding CheckoutCommand}"
+                    BackgroundColor="#ff9800"
+                    TextColor="White"
+                    FontAttributes="Bold" />
+
+            <Label Text="{Binding Message}"
+                   TextColor="Red"
+                   HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

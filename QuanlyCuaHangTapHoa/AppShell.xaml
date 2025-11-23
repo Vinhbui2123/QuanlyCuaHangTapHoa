@@ -19,6 +19,10 @@
         Route="ProductListPage"
         ContentTemplate="{DataTemplate views:ProductListPage}"
         Title="Sản phẩm" />
-    
+    <!-- Màn hình bán hàng -->
+    <ShellContent
+        Route="PosPage"
+        ContentTemplate="{DataTemplate views:PosPage}"
+        Title="Bán hàng" />
 
 </Shell>

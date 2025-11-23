@@ -8,6 +8,12 @@ namespace QuanlyCuaHangTapHoa.Services
         Task<(bool Success, string Message, User? User)> LoginAsync(string username, string password);
         Task LogoutAsync();
         Task<(bool Success, string Message)> ChangePasswordAsync(string oldPassword, string newPassword);
+
+        // ✅ Dùng cho UI: phiên bản async
+        Task<User?> GetCurrentUserAsync();
+        Task<bool> IsLoggedInAsync();
+
+        // Giữ lại cho nơi nào cần sync (hạn chế dùng)
         User? GetCurrentUser();
         bool IsLoggedIn();
 

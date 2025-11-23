@@ -8,6 +8,7 @@ using QuanlyCuaHangTapHoa.ViewModels;
 
 
 
+
 namespace QuanlyCuaHangTapHoa;
 
 public static class MauiProgram
@@ -38,6 +39,7 @@ public static class MauiProgram
         // Services
         builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
         builder.Services.AddScoped<IProductService, ProductService>();
+        builder.Services.AddScoped<ISalesService, SalesService>();
 
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<LoginPage>();
@@ -55,6 +57,10 @@ public static class MauiProgram
 
         builder.Services.AddTransient<ProductDetailViewModel>();
         builder.Services.AddTransient<ProductDetailPage>();
+
+        builder.Services.AddTransient<PosViewModel>();
+        builder.Services.AddTransient<PosPage>();
+
 
 
 
