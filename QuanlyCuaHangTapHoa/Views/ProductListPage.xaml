@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuanlyCuaHangTapHoa.ViewModels"
+             x:Class="QuanlyCuaHangTapHoa.Views.ProductListPage"
+             Title="Sản phẩm">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Thêm"
+                     Priority="0"
+                     Order="Primary"
+                     Command="{Binding GoToAddProductCommand}" />
+        <!-- NÚT LÀM MỚI -->
+        <ToolbarItem Text="Làm mới"
+                     Priority="1"
+                     Order="Primary"
+                     Command="{Binding RefreshCommand}" />
+    </ContentPage.ToolbarItems>
+
+
+    <Grid RowDefinitions="Auto, *" Padding="10">
+
+        <!-- Thanh tìm kiếm -->
+        <HorizontalStackLayout Grid.Row="0" Spacing="8">
+            <Entry Placeholder="Tìm theo tên hoặc mã..."
+                   HorizontalOptions="FillAndExpand"
+                   Text="{Binding SearchText}"
+                   Completed="SearchEntry_Completed" />
+
+            <Button Text="Tìm"
+                    Command="{Binding SearchCommand}" />
+        </HorizontalStackLayout>
+
+        <!-- Danh sách sản phẩm -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Products}"
+                        SelectionMode="Single"
+                        SelectionChanged="CollectionView_SelectionChanged">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5"
+                           Padding="10"
+                           HasShadow="True"
+                           CornerRadius="8">
+
+                        <Grid ColumnDefinitions="*,Auto"
+                              RowDefinitions="Auto,Auto">
+
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"
+                                   FontSize="16" />
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   FontSize="13">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Mã: " />
+                                        <Span Text="{Binding Code}" />
+                                        <Span Text="  |  Giá bán: " />
+                                        <Span Text="{Binding SellingPrice}" />
+                                        <Span Text="  |  Tồn: " />
+                                        <Span Text="{Binding StockQuantity}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Grid.Column="1"
+                                   Text="{Binding Status}"
+                                   VerticalOptions="Center"
+                                   FontSize="12"
+                                   TextColor="Gray" />
+                        </Grid>
+
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <Label Text="Không có sản phẩm."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+</ContentPage>

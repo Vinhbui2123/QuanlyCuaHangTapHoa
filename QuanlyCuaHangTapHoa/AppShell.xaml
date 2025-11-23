@@ -14,6 +14,11 @@
     <ShellContent
         Route="HomePage"
         ContentTemplate="{DataTemplate views:HomePage}" />
+    <!-- QUẢN LÝ SẢN PHẨM -->
+    <ShellContent
+        Route="ProductListPage"
+        ContentTemplate="{DataTemplate views:ProductListPage}"
+        Title="Sản phẩm" />
     
 
 </Shell>

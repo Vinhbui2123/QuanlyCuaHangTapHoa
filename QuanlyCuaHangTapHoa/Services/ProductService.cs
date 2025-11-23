@@ -32,6 +32,9 @@ namespace QuanlyCuaHangTapHoa.Services
         public Task<List<Product>> SearchAsync(string keyword)
             => _productRepo.SearchByNameOrCodeAsync(keyword);
 
+        /// <summary>
+        /// Thêm mới hoặc cập nhật sản phẩm
+        /// </summary>
         public async Task<(bool Success, string Message)> SaveAsync(Product product)
         {
             if (string.IsNullOrWhiteSpace(product.Name))
@@ -42,16 +45,38 @@ namespace QuanlyCuaHangTapHoa.Services
 
             try
             {
-                // Kiểm tra trùng mã khi thêm mới hoặc sửa
-                var existed = await _productRepo.FindAsync(p => p.Code == product.Code && p.Id != product.Id);
+                // kiểm tra trùng mã (trừ chính nó)
+                var existed = await _db.Products
+                    .Where(p => p.Code == product.Code && p.Id != product.Id)
+                    .ToListAsync();
+
                 if (existed.Any())
                     return (false, "Mã sản phẩm đã tồn tại.");
 
                 if (product.Id == 0)
-                    await _productRepo.AddAsync(product);
+                {
+                    // THÊM MỚI
+                    await _db.Products.AddAsync(product);
+                }
                 else
-                    await _productRepo.UpdateAsync(product);
+                {
+                    // CẬP NHẬT: lấy entity trong DB rồi gán lại thuộc tính
+                    var dbProduct = await _db.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
+                    if (dbProduct == null)
+                        return (false, "Không tìm thấy sản phẩm để cập nhật.");
 
+                    dbProduct.Code = product.Code;
+                    dbProduct.Name = product.Name;
+                    dbProduct.CategoryId = product.CategoryId;
+                    dbProduct.Unit = product.Unit;
+                    dbProduct.PurchasePrice = product.PurchasePrice;
+                    dbProduct.SellingPrice = product.SellingPrice;
+                    dbProduct.StockQuantity = product.StockQuantity;
+                    dbProduct.Status = product.Status;
+                    dbProduct.IsActive = product.IsActive;
+                }
+
+                await _db.SaveChangesAsync();
                 return (true, "Lưu sản phẩm thành công.");
             }
             catch (System.Exception ex)
@@ -61,14 +86,21 @@ namespace QuanlyCuaHangTapHoa.Services
             }
         }
 
+        /// <summary>
+        /// Xóa sản phẩm theo Id
+        /// </summary>
         public async Task<(bool Success, string Message)> DeleteAsync(int id)
         {
             try
             {
-                var ok = await _productRepo.DeleteAsync(id);
-                return ok
-                    ? (true, "Xóa sản phẩm thành công.")
-                    : (false, "Không tìm thấy sản phẩm để xóa.");
+                var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == id);
+                if (product == null)
+                    return (false, "Không tìm thấy sản phẩm để xóa.");
+
+                _db.Products.Remove(product);
+                await _db.SaveChangesAsync();
+
+                return (true, "Xóa sản phẩm thành công.");
             }
             catch (System.Exception ex)
             {
@@ -95,7 +127,7 @@ namespace QuanlyCuaHangTapHoa.Services
 
         public async Task<(bool Success, string Message)> AdjustStockAsync(int productId, int changeAmount, string reason)
         {
-            var product = await _productRepo.GetByIdAsync(productId);
+            var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == productId);
             if (product == null)
                 return (false, "Không tìm thấy sản phẩm.");
 
@@ -103,17 +135,12 @@ namespace QuanlyCuaHangTapHoa.Services
             if (product.StockQuantity < 0)
                 product.StockQuantity = 0;
 
-            // Cập nhật trạng thái tồn kho đơn giản
             if (product.StockQuantity == 0) product.Status = "OutOfStock";
             else if (product.StockQuantity <= 5) product.Status = "LowStock";
             else product.Status = "InStock";
 
             try
             {
-                // Cập nhật sản phẩm
-                await _productRepo.UpdateAsync(product);
-
-                // Ghi log tồn kho
                 var movement = new StockMovement
                 {
                     ProductId = product.Id,
