@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuanlyCuaHangTapHoa.Views.CategoryDetailPage"
+             Title="Danh mục">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <Entry Placeholder="Tên danh mục"
+               Text="{Binding Name}" />
+
+        <HorizontalStackLayout Spacing="8">
+            <Label Text="Hoạt động" VerticalOptions="Center" />
+            <Switch IsToggled="{Binding IsActive}" />
+        </HorizontalStackLayout>
+
+        <Button Text="Lưu"
+                Command="{Binding SaveCommand}"
+                BackgroundColor="#28a745"
+                TextColor="White" />
+
+        <Button Text="Xóa"
+                Command="{Binding DeleteCommand}"
+                BackgroundColor="#dc3545"
+                TextColor="White" />
+
+        <Label Text="{Binding Message}"
+               TextColor="Red"
+               HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -41,6 +41,8 @@ public static class MauiProgram
         builder.Services.AddScoped<IProductService, ProductService>();
         builder.Services.AddScoped<ISalesService, SalesService>();
 
+        builder.Services.AddScoped<ICategoryService, CategoryService>();
+
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<HomePage>();
@@ -60,6 +62,13 @@ public static class MauiProgram
 
         builder.Services.AddTransient<PosViewModel>();
         builder.Services.AddTransient<PosPage>();
+
+        
+        builder.Services.AddTransient<CategoryListViewModel>();
+        builder.Services.AddTransient<CategoryDetailViewModel>();
+        builder.Services.AddTransient<CategoryListPage>();
+        builder.Services.AddTransient<CategoryDetailPage>();
+
 
 
 

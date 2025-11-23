@@ -13,5 +13,7 @@ public partial class AppShell : Shell
 
         // đăng ký route cho ProductDetailPage
         Routing.RegisterRoute(nameof(ProductDetailPage), typeof(ProductDetailPage));
+
+        Routing.RegisterRoute(nameof(CategoryDetailPage), typeof(CategoryDetailPage));
     }
 }

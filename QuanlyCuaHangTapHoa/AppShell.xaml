@@ -25,4 +25,9 @@
         ContentTemplate="{DataTemplate views:PosPage}"
         Title="Bán hàng" />
 
+    <ShellContent
+        Route="CategoryListPage"
+        ContentTemplate="{DataTemplate views:CategoryListPage}"
+        Title="Danh mục" />
+
 </Shell>
