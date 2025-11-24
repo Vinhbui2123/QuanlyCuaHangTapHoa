@@ -23,8 +23,15 @@ namespace QuanlyCuaHangTapHoa.Services
             _db = db;
         }
 
-        public Task<List<Product>> GetAllAsync()
-            => _productRepo.GetAllAsync();
+        public async Task<List<Product>> GetAllAsync()  
+        {
+            // Chỉ lấy sản phẩm còn hoạt động
+            return await _db.Products
+                .Where(p => p.IsActive)
+                .OrderBy(p => p.Name)
+                .ToListAsync();
+        }
+
 
         public Task<Product?> GetByIdAsync(int id)
             => _productRepo.GetByIdAsync(id);
@@ -72,8 +79,16 @@ namespace QuanlyCuaHangTapHoa.Services
                     dbProduct.PurchasePrice = product.PurchasePrice;
                     dbProduct.SellingPrice = product.SellingPrice;
                     dbProduct.StockQuantity = product.StockQuantity;
-                    dbProduct.Status = product.Status;
+                    dbProduct.Status = product.Status; 
                     dbProduct.IsActive = product.IsActive;
+
+                    // ⬇️ TÍNH LẠI STATUS Ở ĐÂY
+                    if (dbProduct.StockQuantity == 0)
+                        dbProduct.Status = "OutOfStock";
+                    else if (dbProduct.StockQuantity <= 5)
+                        dbProduct.Status = "LowStock";
+                    else
+                        dbProduct.Status = "InStock";
                 }
 
                 await _db.SaveChangesAsync();
@@ -97,6 +112,19 @@ namespace QuanlyCuaHangTapHoa.Services
                 if (product == null)
                     return (false, "Không tìm thấy sản phẩm để xóa.");
 
+                // Kiểm tra đã phát sinh giao dịch chưa
+                bool hasSaleDetails = await _db.SaleDetails.AnyAsync(d => d.ProductId == id);
+                bool hasMovements = await _db.StockMovements.AnyAsync(m => m.ProductId == id);
+
+                if (hasSaleDetails || hasMovements)
+                {
+                    // ❗ Không xóa cứng, chỉ khóa sản phẩm
+                    product.IsActive = false;
+                    await _db.SaveChangesAsync();
+                    return (true, "Sản phẩm đã phát sinh giao dịch, hệ thống sẽ khóa sản phẩm (không xóa hẳn).");
+                }
+
+                // Chưa có giao dịch nào → cho xóa cứng
                 _db.Products.Remove(product);
                 await _db.SaveChangesAsync();
 
@@ -108,6 +136,7 @@ namespace QuanlyCuaHangTapHoa.Services
                 return (false, "Xóa sản phẩm thất bại.");
             }
         }
+
 
         public async Task<List<Product>> GetLowStockProductsAsync(int threshold = 5)
         {

@@ -15,6 +15,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(ProductDetailPage), typeof(ProductDetailPage));
 
         Routing.RegisterRoute(nameof(CategoryDetailPage), typeof(CategoryDetailPage));
+        Routing.RegisterRoute(nameof(SaleDetailPage), typeof(SaleDetailPage));
+
 
 
         // 🚫 KHÓA menu khi mới vào app

@@ -220,6 +220,10 @@ namespace QuanlyCuaHangTapHoa.ViewModels
             {
                 Debug.WriteLine($"[PosViewModel] CheckoutAsync error: {ex.Message}");
                 Message = ex.Message;
+                await Application.Current.MainPage.DisplayAlert(
+                                    "Lỗi bán hàng",
+                                     ex.Message,
+                                     "Đóng");
             }
 
             IsBusy = false;

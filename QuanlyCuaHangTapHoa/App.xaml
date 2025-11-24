@@ -5,10 +5,73 @@
              x:Class="QuanlyCuaHangTapHoa.App">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+
+            <!-- 🌈 MÀU CHỦ ĐẠO -->
+            <Color x:Key="PrimaryColor">#FF6F00</Color>
+            <!-- cam đậm -->
+            <Color x:Key="PrimaryDarkColor">#E65100</Color>
+            <Color x:Key="AccentColor">#29B6F6</Color>
+            <!-- xanh nhạt -->
+            <Color x:Key="BgColor">#121212</Color>
+            <!-- nền tối -->
+            <Color x:Key="CardColor">#1E1E1E</Color>
+            <Color x:Key="BorderSoftColor">#333333</Color>
+            <Color x:Key="TextPrimaryColor">#FFFFFF</Color>
+            <Color x:Key="TextSecondaryColor">#B0B0B0</Color>
+            <Color x:Key="DangerColor">#EF5350</Color>
+            <Color x:Key="SuccessColor">#66BB6A</Color>
+
+            <!-- 🎛 Style cho ContentPage -->
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="{StaticResource BgColor}" />
+            </Style>
+
+            <!-- 📝 Style Label -->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+            </Style>
+
+            <!-- 🔘 Style Button chính -->
+            <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="HeightRequest" Value="44" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="0,6,0,0" />
+            </Style>
+
+            <!-- 🔲 Style Button phụ (viền) -->
+            <Style x:Key="OutlinedButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource AccentColor}" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="Margin" Value="0,6,0,0" />
+            </Style>
+
+            <!-- ✏️ Style Entry -->
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource TextSecondaryColor}" />
+                <Setter Property="BackgroundColor" Value="#1C1C1C" />
+                <Setter Property="Margin" Value="0,4,0,0" />
+                <Setter Property="HeightRequest" Value="40" />
+            </Style>
+
+            <!-- 🧱 Style card chung -->
+            <Style x:Key="CardFrameStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="16" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="BackgroundColor" Value="{StaticResource CardColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource BorderSoftColor}" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
+
 </Application>

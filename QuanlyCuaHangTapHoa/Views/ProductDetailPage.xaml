@@ -3,51 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuanlyCuaHangTapHoa.Views.ProductDetailPage"
              Title="Thêm sản phẩm">
-    
-
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="10">
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Entry Placeholder="Mã sản phẩm" Text="{Binding Code}" />
+                    <Entry Placeholder="Tên sản phẩm" Text="{Binding Name}" />
+                    <Picker Title="Nhóm hàng"
+                            ItemsSource="{Binding Categories}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding SelectedCategory}" />
+                    <Entry Placeholder="Đơn vị tính" Text="{Binding Unit}" />
 
-            <Entry Placeholder="Mã sản phẩm"
-                   Text="{Binding Code}" />
+                    <Entry Placeholder="Giá nhập" Keyboard="Numeric" Text="{Binding PurchasePrice}" />
+                    <Entry Placeholder="Giá bán" Keyboard="Numeric" Text="{Binding SellingPrice}" />
+                    <Entry Placeholder="Tồn kho" Keyboard="Numeric" Text="{Binding StockQuantity}" />
 
-            <Entry Placeholder="Tên sản phẩm"
-                   Text="{Binding Name}" />
+                    <Button Text="Lưu"
+                            Command="{Binding SaveCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}" />
 
-            <Picker Title="Nhóm hàng"
-                    ItemsSource="{Binding Categories}"
-                    ItemDisplayBinding="{Binding Name}"
-                    SelectedItem="{Binding SelectedCategory}" />
+                    <Button Text="Xóa"
+                            Command="{Binding DeleteCommand}"
+                            Style="{StaticResource OutlinedButtonStyle}"
+                            TextColor="{StaticResource DangerColor}"
+                            BorderColor="{StaticResource DangerColor}" />
 
-            <Entry Placeholder="Đơn vị tính (chai, lon, gói...)"
-                   Text="{Binding Unit}" />
-
-            <Entry Placeholder="Giá nhập"
-                   Keyboard="Numeric"
-                   Text="{Binding PurchasePrice}" />
-
-            <Entry Placeholder="Giá bán"
-                   Keyboard="Numeric"
-                   Text="{Binding SellingPrice}" />
-
-            <Entry Placeholder="Số lượng tồn ban đầu"
-                   Keyboard="Numeric"
-                   Text="{Binding StockQuantity}" />
-
-            <Button Text="Lưu"
-                    Command="{Binding SaveCommand}"
-                    BackgroundColor="#28a745"
-                    TextColor="White" />
-            <Button Text="Xóa"
-                    Command="{Binding DeleteCommand}"
-                    BackgroundColor="#dc3545"
-                    TextColor="White" />
-
-            <Label Text="{Binding Message}"
-                   TextColor="Red"
-                   HorizontalOptions="Center" />
-
+                    <Label Text="{Binding Message}"
+                           TextColor="{StaticResource DangerColor}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -30,6 +30,12 @@
             Route="PosPage"
             ContentTemplate="{DataTemplate views:PosPage}" />
     </FlyoutItem>
+    
+    <FlyoutItem Title="Lịch sử bán hàng">
+        <ShellContent
+        Route="SalesHistoryPage"
+        ContentTemplate="{DataTemplate views:SalesHistoryPage}" />
+    </FlyoutItem>
 
     <!-- DANH MỤC -->
     <FlyoutItem Title="Danh mục">

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuanlyCuaHangTapHoa.Views.SalesHistoryPage"
+             Title="Lịch sử bán hàng">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Làm mới"
+                     Command="{Binding RefreshCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="10">
+
+        <!-- 🌟 HEADER -->
+        <Frame Grid.Row="0"
+           CornerRadius="18"
+           HasShadow="True"
+           Padding="14"
+           Margin="0,0,0,10"
+           BackgroundColor="#242424">
+            <Grid ColumnDefinitions="Auto,*">
+                <Label Text="🧾"
+                   FontSize="28"
+                   VerticalOptions="Center" />
+                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                    <Label Text="Lịch sử hóa đơn"
+                       FontSize="18"
+                       FontAttributes="Bold" />
+                    <Label Text="Theo dõi các giao dịch bán hàng"
+                       FontSize="13"
+                       TextColor="{StaticResource TextSecondaryColor}" />
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+
+        <!-- 🗓️ Bộ lọc ngày -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="8">
+            <VerticalStackLayout>
+                <Label Text="Từ ngày" FontSize="12" />
+                <DatePicker Date="{Binding FromDate}" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Label Text="Đến ngày" FontSize="12" />
+                <DatePicker Date="{Binding ToDate}" />
+            </VerticalStackLayout>
+
+            <Button Text="Lọc"
+                VerticalOptions="End"
+                Command="{Binding LoadCommand}" />
+        </HorizontalStackLayout>
+
+        <!-- 📋 Danh sách hóa đơn -->
+        <CollectionView Grid.Row="2"
+                    ItemsSource="{Binding Sales}"
+                    SelectionMode="Single"
+                    SelectionChanged="CollectionView_SelectionChanged">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                               ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="10,6,10,6"
+                       Padding="12"
+                       HasShadow="True"
+                       CornerRadius="14">
+                        <Grid ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto">
+
+                            <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="{Binding Code}"
+                               FontAttributes="Bold" />
+
+                            <Label Grid.Row="1"
+                               Grid.Column="0"
+                               FontSize="13">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Ngày: " />
+                                        <Span Text="{Binding Date, StringFormat='{0:dd/MM/yyyy HH:mm}'}" />
+                                        <Span Text="  |  Thanh toán: " />
+                                        <Span Text="{Binding FinalAmount, StringFormat='{0:n0} đ'}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label Grid.Row="0"
+                               Grid.RowSpan="2"
+                               Grid.Column="1"
+                               Text="{Binding PaymentMethod}"
+                               FontSize="12"
+                               VerticalOptions="Center" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <Label Text="{Binding Message}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+        <!-- 💰 Tổng doanh thu -->
+        <Label Grid.Row="3"
+           HorizontalOptions="End"
+           FontAttributes="Bold">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Tổng doanh thu: " />
+                    <Span Text="{Binding TotalRevenue, StringFormat='{0:n0} đ'}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+    </Grid>
+
+</ContentPage>

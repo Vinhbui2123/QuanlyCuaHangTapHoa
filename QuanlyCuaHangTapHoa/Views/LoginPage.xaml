@@ -5,32 +5,51 @@
              x:Class="QuanlyCuaHangTapHoa.Views.LoginPage"
              Title="Đăng nhập">
 
-    <VerticalStackLayout Padding="30" Spacing="15">
+    <Grid>
+        <!-- Có thể thêm gradient nhẹ bằng BoxView + Brush nếu thích -->
 
-        <Label Text="ĐĂNG NHẬP"
-               HorizontalOptions="Center"
-               FontSize="28"
-               FontAttributes="Bold"/>
+        <VerticalStackLayout
+            Padding="24"
+            Spacing="16"
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="CenterAndExpand"
+            WidthRequest="360">
 
-        <Entry Placeholder="Tên đăng nhập"
-               Text="{Binding Username}" />
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="12">
 
-        <Entry Placeholder="Mật khẩu"
-               IsPassword="True"
-               Text="{Binding Password}" />
+                    <Label Text="Quản lý tạp hóa"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
 
-        <Button Text="Đăng nhập"
-                Command="{Binding LoginCommand}"
-                BackgroundColor="#007AFF"
-                TextColor="White"/>
-        <Button Text="Đăng ký tài khoản mới"
-                Command="{Binding GoToRegisterCommand}"
-                BackgroundColor="Transparent"
-                TextColor="#007AFF" />
-        <Label Text="{Binding Message}"
-               TextColor="Red"
-               FontSize="14"
-               HorizontalOptions="Center" />
+                    <Label Text="Đăng nhập hệ thống"
+                           FontSize="14"
+                           TextColor="{StaticResource TextSecondaryColor}"
+                           HorizontalOptions="Center" />
 
-    </VerticalStackLayout>
+                    <Entry Placeholder="Tên đăng nhập"
+                           Text="{Binding Username}" />
+
+                    <Entry Placeholder="Mật khẩu"
+                           IsPassword="True"
+                           Text="{Binding Password}" />
+
+                    <Button Text="Đăng nhập"
+                            Command="{Binding LoginCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}" />
+
+                    <Button Text="Đăng ký tài khoản mới"
+                            Command="{Binding GoToRegisterCommand}"
+                            Style="{StaticResource OutlinedButtonStyle}" />
+
+                    <Label Text="{Binding Message}"
+                           TextColor="{StaticResource DangerColor}"
+                           FontSize="12"
+                           HorizontalOptions="Center" />
+
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

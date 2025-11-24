@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuanlyCuaHangTapHoa.Views.SaleDetailPage"
+             Title="Chi tiết hóa đơn">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="10">
+
+        <!-- Thông tin chung hóa đơn -->
+        <VerticalStackLayout Grid.Row="0" Spacing="4">
+            <Label Text="{Binding SaleCode}"
+                   FontSize="18"
+                   FontAttributes="Bold" />
+
+            <Label FontSize="13">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Ngày: " />
+                        <Span Text="{Binding SaleDate, StringFormat='{0:dd/MM/yyyy HH:mm}'}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label FontSize="13">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Thanh toán: " />
+                        <Span Text="{Binding FinalAmount,StringFormat='{0:n0} đ'}" />
+                        <Span Text="  |  Khách đưa: " />
+                        <Span Text="{Binding ReceivedAmount,StringFormat='{0:n0} đ'}" />
+                        <Span Text="  |  Tiền thừa: " />
+                        <Span Text="{Binding ChangeAmount,StringFormat='{0:n0} đ'}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label FontSize="13">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Hình thức: " />
+                        <Span Text="{Binding PaymentMethod}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label FontSize="13"
+                   Text="{Binding Notes}"
+                   IsVisible="{Binding Notes, Converter={StaticResource NullToBoolConverter}}" />
+        </VerticalStackLayout>
+
+        <!-- Danh sách sản phẩm trong hóa đơn -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Items}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5"
+                           Padding="8"
+                           HasShadow="True"
+                           CornerRadius="6">
+                        <Grid ColumnDefinitions="*,Auto"
+                              RowDefinitions="Auto,Auto">
+
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding ProductName}"
+                                   FontAttributes="Bold" />
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   FontSize="13">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="SL: " />
+                                        <Span Text="{Binding Quantity}" />
+                                        <Span Text="  |  Đơn giá: " />
+                                        <Span Text="{Binding UnitPrice, StringFormat='{0:n0} đ'}" />
+                                        <Span Text="  |  Thành tiền: " />
+                                        <Span Text="{Binding TotalPrice, StringFormat='{0:n0} đ'}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Grid.Row="2"
+               Text="{Binding Message}"
+               TextColor="Red"
+               HorizontalOptions="Center" />
+
+    </Grid>
+</ContentPage>

@@ -70,6 +70,12 @@ public static class MauiProgram
         builder.Services.AddTransient<CategoryDetailPage>();
 
 
+        builder.Services.AddTransient<SalesHistoryViewModel>();
+        builder.Services.AddTransient<SaleDetailViewModel>();
+        builder.Services.AddTransient<SalesHistoryPage>();
+        builder.Services.AddTransient<SaleDetailPage>();
+
+
 
 
 
