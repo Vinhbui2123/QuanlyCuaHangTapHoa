@@ -29,6 +29,23 @@ namespace QuanlyCuaHangTapHoa.Services
             if (items == null || items.Count == 0)
                 throw new ArgumentException("Hóa đơn không có mặt hàng nào.");
 
+            // KIỂM TRA TỒN KHO TRƯỚC KHI TẠO HÓA ĐƠN
+            foreach (var item in items)
+            {
+                var product = await _db.Products
+                    .FirstOrDefaultAsync(p => p.Id == item.ProductId);
+
+                if (product == null)
+                    throw new InvalidOperationException($"Không tìm thấy sản phẩm (Id={item.ProductId}).");
+
+                if (product.StockQuantity < item.Quantity)
+                {
+                    throw new InvalidOperationException(
+                        $"Sản phẩm '{product.Name}' chỉ còn {product.StockQuantity} {product.Unit} trong kho, " +
+                        $"không đủ để bán {item.Quantity}.");
+                }
+            }
+
             using var transaction = await _db.Database.BeginTransactionAsync();
 
             try

@@ -70,27 +70,8 @@ namespace QuanlyCuaHangTapHoa.ViewModels
 
             try
             {
-                // ưu tiên tìm theo mã
-                var product = await (_productService as dynamic)
-                    .GetType()
-                    .GetMethod("GetByIdAsync"); // chỉ để IDE không cảnh báo, ta dùng service khác bên dưới
-            }
-            catch { }
-
-            try
-            {
-                // Dùng repository để tìm theo Code trước
-                Product? p = null;
-
-                // nếu user nhập toàn chữ/số liền nhau, thử coi như mã
                 var listByName = await _productService.SearchAsync(keyword);
-                if (listByName.Count == 1)
-                    p = listByName.First();
-                else
-                {
-                    // nếu có nhiều kết quả, tạm lấy cái đầu tiên
-                    p = listByName.FirstOrDefault();
-                }
+                var p = listByName.FirstOrDefault();
 
                 if (p == null)
                 {
@@ -99,14 +80,32 @@ namespace QuanlyCuaHangTapHoa.ViewModels
                     return;
                 }
 
+                // Nếu product đang có trong giỏ
                 var existing = CartItems.FirstOrDefault(ci => ci.Product.Id == p.Id);
+
                 if (existing != null)
                 {
+                    // 🔥 Không cho vượt tồn kho
+                    if (existing.Quantity >= p.StockQuantity)
+                    {
+                        Message = $"Sản phẩm '{p.Name}' chỉ còn {p.StockQuantity} {p.Unit} trong kho.";
+                        IsBusy = false;
+                        return;
+                    }
+
                     existing.Quantity += 1;
                     OnPropertyChanged(nameof(CartItems));
                 }
                 else
                 {
+                    // 🔥 Nếu hết hàng → không cho thêm
+                    if (p.StockQuantity <= 0)
+                    {
+                        Message = $"Sản phẩm '{p.Name}' đã hết hàng.";
+                        IsBusy = false;
+                        return;
+                    }
+
                     CartItems.Add(new CartItem
                     {
                         Product = p,
@@ -119,23 +118,32 @@ namespace QuanlyCuaHangTapHoa.ViewModels
                 SearchCodeOrName = string.Empty;
                 RecalculateTotals();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                Debug.WriteLine($"[PosViewModel] AddProductAsync error: {ex.Message}");
-                Message = "Không thể thêm sản phẩm. Vui lòng thử lại.";
+                Message = ex.Message;
             }
 
             IsBusy = false;
         }
 
+
         [RelayCommand]
         public void IncreaseQuantity(CartItem item)
         {
             if (item == null) return;
+
+            // Không cho vượt tồn kho hiện tại
+            if (item.Quantity >= item.Product.StockQuantity)
+            {
+                Message = $"Sản phẩm '{item.Product.Name}' chỉ còn {item.Product.StockQuantity} {item.Product.Unit} trong kho.";
+                return;
+            }
+
             item.Quantity += 1;
             OnPropertyChanged(nameof(CartItems));
             RecalculateTotals();
         }
+
 
         [RelayCommand]
         public void DecreaseQuantity(CartItem item)
@@ -211,7 +219,7 @@ namespace QuanlyCuaHangTapHoa.ViewModels
             catch (System.Exception ex)
             {
                 Debug.WriteLine($"[PosViewModel] CheckoutAsync error: {ex.Message}");
-                Message = "Thanh toán thất bại. Vui lòng thử lại.";
+                Message = ex.Message;
             }
 
             IsBusy = false;
