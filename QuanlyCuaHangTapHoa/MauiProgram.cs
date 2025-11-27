@@ -74,6 +74,9 @@ public static class MauiProgram
         builder.Services.AddTransient<SalesHistoryPage>();
         builder.Services.AddTransient<SaleDetailPage>();
 
+        builder.Services.AddTransient<HomePageViewModel>();
+        builder.Services.AddTransient<HomePage>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
