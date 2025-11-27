@@ -30,8 +30,8 @@ namespace QuanlyCuaHangTapHoa.Data
         }
 
         /// <summary>
-        /// Chỉ dùng khi không cấu hình qua DI (trong trường hợp đặc biệt).
-        /// Ở đây chủ yếu để debug hoặc dùng trong design-time.
+        /// Fallback khi context không được cấu hình qua DI.
+        /// Bình thường app sẽ dùng cấu hình trong MauiProgram.
         /// </summary>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -76,7 +76,7 @@ namespace QuanlyCuaHangTapHoa.Data
             // Quan hệ 1-n: User - PurchaseOrders
             modelBuilder.Entity<PurchaseOrder>()
                 .HasOne(po => po.CreatedByUser)
-                .WithMany() // nếu muốn có ICollection<PurchaseOrder> trong User thì sửa lại
+                .WithMany()
                 .HasForeignKey(po => po.CreatedByUserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -142,15 +142,13 @@ namespace QuanlyCuaHangTapHoa.Data
 
         private void SeedInitialData(ModelBuilder modelBuilder)
         {
-            // Lưu ý: giá trị phải cố định, không dùng DateTime.Now (migration không cho).
             var seedDate = new DateTime(2024, 1, 1);
 
-            // 1 admin user (password sẽ xử lý hash sau trong AuthService)
             modelBuilder.Entity<User>().HasData(new User
             {
                 Id = 1,
                 Username = "admin",
-                PasswordHash = "Admin@123", // TẠM THỜI: sẽ thay bằng hash BCrypt ở bước Auth
+                PasswordHash = "Admin@123", // TẠM THỜI: nhớ đồng bộ với logic Auth
                 Role = "Admin",
                 FullName = "Quản trị hệ thống",
                 Email = "admin@example.com",
@@ -159,7 +157,6 @@ namespace QuanlyCuaHangTapHoa.Data
                 IsActive = true
             });
 
-            // Categories mẫu
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Đồ uống", IsActive = true },
                 new Category { Id = 2, Name = "Bánh kẹo", IsActive = true },
@@ -168,7 +165,6 @@ namespace QuanlyCuaHangTapHoa.Data
                 new Category { Id = 5, Name = "Đồ hộp", IsActive = true }
             );
 
-            // Products mẫu
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {

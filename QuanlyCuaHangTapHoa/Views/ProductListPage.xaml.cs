@@ -25,14 +25,14 @@ public partial class ProductListPage : ContentPage
     {
         _vm.SearchCommand.Execute(null);
     }
-    private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        var product = e.CurrentSelection.FirstOrDefault() as Product;
-        if (product == null) return;
+    //private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    //{
+    //    var product = e.CurrentSelection.FirstOrDefault() as Product;
+    //    if (product == null) return;
 
-        _vm.GoToEditProductCommand.Execute(product);
+    //    _vm.GoToEditProductCommand.Execute(product);
 
-        ((CollectionView)sender).SelectedItem = null; // bỏ chọn để lần sau tap vẫn ăn
-    }
+    //    ((CollectionView)sender).SelectedItem = null; // bỏ chọn để lần sau tap vẫn ăn
+    //}
 
 }

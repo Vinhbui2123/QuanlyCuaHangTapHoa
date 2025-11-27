@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:QuanlyCuaHangTapHoa.ViewModels"
              x:Class="QuanlyCuaHangTapHoa.Views.ProductListPage"
+             x:Name="ProductListPageRoot"
              Title="Sản phẩm">
 
     <ContentPage.ToolbarItems>
@@ -110,7 +111,7 @@
         <CollectionView Grid.Row="2"
                     ItemsSource="{Binding Products}"
                     SelectionMode="Single"
-                    SelectionChanged="CollectionView_SelectionChanged">
+                    >
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical"
@@ -121,6 +122,15 @@
                 <DataTemplate>
                     <Frame Style="{StaticResource CardFrameStyle}"
                        Margin="10,6,10,6">
+                        <!-- Bắt tap trên cả item -->
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                    Command="{Binding BindingContext.GoToEditProductCommand,
+                                      Source={x:Reference ProductListPageRoot}}"
+                    CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+
                         <Grid ColumnDefinitions="*,Auto"
                           RowDefinitions="Auto,Auto">
 
