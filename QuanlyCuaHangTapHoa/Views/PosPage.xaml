@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuanlyCuaHangTapHoa.Views.PosPage"
-             Title="Bán hàng">
+             Title="Bán hàng"
+             BackgroundColor="{StaticResource BgColor}">
 
     <!-- Đổi thành 4 hàng: Header, Thanh tìm, Giỏ hàng, Thanh toán -->
     <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="10">
@@ -84,33 +85,54 @@
 
                             <!-- Nút +/-/x đẹp hơn -->
                             <HorizontalStackLayout Grid.Row="0"
-                                                   Grid.RowSpan="2"
-                                                   Grid.Column="1"
-                                                   Spacing="4"
-                                                   VerticalOptions="Center">
+                       Grid.RowSpan="2"
+                       Grid.Column="1"
+                       Spacing="6"
+                       VerticalOptions="Center">
+
+                                <!-- Nút giảm -->
                                 <Button Text="-"
-                                        WidthRequest="32"
-                                        HeightRequest="32"
-                                        CornerRadius="16"
-                                        FontAttributes="Bold"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DecreaseQuantityCommand}"
-                                        CommandParameter="{Binding .}" />
+            WidthRequest="32"
+            HeightRequest="32"
+            CornerRadius="16"
+            FontAttributes="Bold"
+            FontSize="18"
+            BackgroundColor="#424242"
+            TextColor="White"
+            Padding="0"
+            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                              Path=BindingContext.DecreaseQuantityCommand}"
+            CommandParameter="{Binding .}" />
+
+                                <!-- Nút tăng -->
                                 <Button Text="+"
-                                        WidthRequest="32"
-                                        HeightRequest="32"
-                                        CornerRadius="16"
-                                        FontAttributes="Bold"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IncreaseQuantityCommand}"
-                                        CommandParameter="{Binding .}" />
+            WidthRequest="32"
+            HeightRequest="32"
+            CornerRadius="16"
+            FontAttributes="Bold"
+            FontSize="18"
+            BackgroundColor="#673AB7"
+            TextColor="White"
+            Padding="0"
+            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                              Path=BindingContext.IncreaseQuantityCommand}"
+            CommandParameter="{Binding .}" />
+
+                                <!-- Nút xóa -->
                                 <Button Text="x"
-                                        WidthRequest="32"
-                                        HeightRequest="32"
-                                        CornerRadius="16"
-                                        FontAttributes="Bold"
-                                        BackgroundColor="{StaticResource DangerColor}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveItemCommand}"
-                                        CommandParameter="{Binding .}" />
+            WidthRequest="32"
+            HeightRequest="32"
+            CornerRadius="16"
+            FontAttributes="Bold"
+            FontSize="18"
+            BackgroundColor="{StaticResource DangerColor}"
+            TextColor="White"
+            Padding="0"
+            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                              Path=BindingContext.RemoveItemCommand}"
+            CommandParameter="{Binding .}" />
                             </HorizontalStackLayout>
+
 
                         </Grid>
                     </Frame>

@@ -1,18 +1,82 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuanlyCuaHangTapHoa.Views.HomePage"
-             Title="Trang chủ">
+             Title="Trang chủ"
+             BackgroundColor="{StaticResource BgColor}">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Đăng xuất"
-                     Clicked="Logout_Clicked" />
-    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
 
-    <VerticalStackLayout Padding="20">
-        <Label Text="Chào mừng!"
-               FontSize="24"
-               HorizontalOptions="Center" />
-    </VerticalStackLayout>
+            <!-- 🎉 Header -->
+            <Frame CornerRadius="18"
+                   BackgroundColor="#242424"
+                   Padding="20"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Xin chào 👋"
+                           FontSize="22"
+                           FontAttributes="Bold"/>
+                    <Label Text="Chúc bạn một ngày làm việc hiệu quả!"
+                           FontSize="14"
+                           TextColor="{StaticResource TextSecondaryColor}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- 📊 THỐNG KÊ NHANH -->
+            <HorizontalStackLayout Spacing="12">
+
+                <!-- Tổng sản phẩm -->
+                <Frame Style="{StaticResource CardFrameStyle}"
+                       WidthRequest="160">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="📦 Tổng SP" FontAttributes="Bold" />
+                        <Label Text="{Binding TotalProducts}" FontSize="20" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Tổng danh mục -->
+                <Frame Style="{StaticResource CardFrameStyle}"
+                       WidthRequest="160">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="🗂️ Danh mục" FontAttributes="Bold" />
+                        <Label Text="{Binding TotalCategories}" FontSize="20" />
+                    </VerticalStackLayout>
+                </Frame>
+
+            </HorizontalStackLayout>
+
+            <!-- 💰 Doanh thu hôm nay -->
+            <Frame Style="{StaticResource CardFrameStyle}">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="💰 Doanh thu hôm nay" FontAttributes="Bold" />
+                    <Label Text="{Binding TodayRevenue, StringFormat='{0:n0} đ'}"
+                           FontSize="22" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- 🚀 Quick Menu -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Chức năng nhanh" FontAttributes="Bold" FontSize="18"/>
+
+                <Button Text="📋 Danh sách sản phẩm"
+                        Command="{Binding GoProductsCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}" />
+
+                <Button Text="🛒 Bán hàng"
+                        Command="{Binding GoPosCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}" />
+
+                <Button Text="📁 Danh mục sản phẩm"
+                        Command="{Binding GoCategoriesCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}" />
+
+                <Button Text="🧾 Lịch sử bán hàng"
+                        Command="{Binding GoHistoryCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}" />
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>

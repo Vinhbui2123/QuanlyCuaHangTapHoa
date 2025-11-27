@@ -1,39 +1,99 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuanlyCuaHangTapHoa.ViewModels"
              x:Class="QuanlyCuaHangTapHoa.Views.CategoryListPage"
-             Title="Danh mục">
+             Title="Danh mục"
+             BackgroundColor="{StaticResource BgColor}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Thêm"
+                     Priority="0"
+                     Order="Primary"
                      Command="{Binding GoToAddCommand}" />
         <ToolbarItem Text="Làm mới"
+                     Priority="1"
+                     Order="Primary"
                      Command="{Binding RefreshCommand}" />
     </ContentPage.ToolbarItems>
 
-    <CollectionView ItemsSource="{Binding Categories}"
-                    SelectionMode="Single"
-                    SelectionChanged="CollectionView_SelectionChanged"
-                    Margin="10">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame Padding="10" Margin="0,5" HasShadow="True" CornerRadius="8">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Text="{Binding Name}"
-                               FontAttributes="Bold" />
-                        <Label Grid.Column="1"
-                               Text="{Binding IsActive, StringFormat='Hoạt động: {0}'}"
-                               FontSize="12"
-                               VerticalOptions="Center" />
-                    </Grid>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
+    <Grid Padding="10">
+        <CollectionView ItemsSource="{Binding Categories}"
+                        SelectionMode="None">
 
-        <CollectionView.EmptyView>
-            <Label Text="Chưa có danh mục nào."
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center" />
-        </CollectionView.EmptyView>
-    </CollectionView>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Style="{StaticResource CardFrameStyle}"
+                           Margin="10,6,10,6"
+                           BackgroundColor="#262626">
+
+                        <!-- BẮT TAP ĐỂ SỬA DANH MỤC -->
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                 Command="{Binding BindingContext.GoToEditCommand,
+                                  Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                  CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <Grid ColumnDefinitions="*,Auto"
+                              RowDefinitions="Auto,Auto">
+
+                            <!-- Tên danh mục -->
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"
+                                   FontSize="16"
+                                   TextColor="White" />
+
+                            <!-- Trạng thái bật / tắt -->
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   FontSize="13"
+                                   TextColor="#CCCCCC">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Trạng thái: " />
+                                        <Span Text="{Binding IsActive,
+                                                             Converter={StaticResource BoolToStatusConverter}}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <!-- Badge trạng thái -->
+                            <Frame Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Grid.Column="1"
+                                   Padding="8,3"
+                                   CornerRadius="12"
+                                   HasShadow="False"
+                                   BackgroundColor="#333333"
+                                   VerticalOptions="Center"
+                                   Margin="0,0,4,0">
+                                <Label Text="{Binding IsActive,
+                                                     Converter={StaticResource BoolToStatusTextConverter}}"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="{Binding IsActive,
+                                                          Converter={StaticResource BoolToStatusColorConverter}}" />
+                            </Frame>
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <Label Text="Chưa có danh mục."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="Gray" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
 </ContentPage>

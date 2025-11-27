@@ -4,7 +4,8 @@
              xmlns:viewmodels="clr-namespace:QuanlyCuaHangTapHoa.ViewModels"
              x:Class="QuanlyCuaHangTapHoa.Views.ProductListPage"
              x:Name="ProductListPageRoot"
-             Title="Sản phẩm">
+             Title="Sản phẩm"
+             BackgroundColor="{StaticResource BgColor}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Thêm"

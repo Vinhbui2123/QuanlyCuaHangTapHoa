@@ -2,9 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuanlyCuaHangTapHoa.Views.SaleDetailPage"
-             Title="Chi tiết hóa đơn">
+             Title="Chi tiết hóa đơn"
+             BackgroundColor="{StaticResource BgColor}">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="10">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="10"
+          BackgroundColor="{StaticResource BgColor}">
 
         <!-- Thông tin chung hóa đơn -->
         <VerticalStackLayout Grid.Row="0" Spacing="4">
@@ -53,10 +55,8 @@
                         ItemsSource="{Binding Items}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="0,5"
-                           Padding="8"
-                           HasShadow="True"
-                           CornerRadius="6">
+                    <Frame Style="{StaticResource CardFrameStyle}"
+                           Margin="10,6,10,6">
                         <Grid ColumnDefinitions="*,Auto"
                               RowDefinitions="Auto,Auto">
 

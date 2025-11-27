@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:QuanlyCuaHangTapHoa.ViewModels"
              x:Class="QuanlyCuaHangTapHoa.Views.LoginPage"
-             Title="Đăng nhập">
+             Title="Đăng nhập"
+             BackgroundColor="{StaticResource BgColor}">
 
     <Grid>
         <!-- Có thể thêm gradient nhẹ bằng BoxView + Brush nếu thích -->

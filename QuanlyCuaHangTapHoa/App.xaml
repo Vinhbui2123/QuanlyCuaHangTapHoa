@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:QuanlyCuaHangTapHoa"
+             xmlns:converters="clr-namespace:QuanlyCuaHangTapHoa.Converters"
              x:Class="QuanlyCuaHangTapHoa.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -25,7 +26,7 @@
             <Style TargetType="ContentPage">
                 <Setter Property="BackgroundColor" Value="{StaticResource BgColor}" />
             </Style>
-
+    
             <!-- 📝 Style Label -->
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource TextPrimaryColor}" />
@@ -70,6 +71,10 @@
                 <Setter Property="BackgroundColor" Value="{StaticResource CardColor}" />
                 <Setter Property="BorderColor" Value="{StaticResource BorderSoftColor}" />
             </Style>
+
+            <!-- Converter mới -->
+            <converters:BoolToStatusTextConverter x:Key="BoolToStatusTextConverter" />
+            <converters:BoolToStatusColorConverter x:Key="BoolToStatusColorConverter" />
 
         </ResourceDictionary>
     </Application.Resources>

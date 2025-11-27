@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:QuanlyCuaHangTapHoa.ViewModels"
              x:Class="QuanlyCuaHangTapHoa.Views.RegisterPage"
-             Title="Đăng ký">
+             Title="Đăng ký"
+             BackgroundColor="{StaticResource BgColor}">
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="12">
